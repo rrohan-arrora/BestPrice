@@ -33,6 +33,7 @@ const Navbar = () => {
                 <Image
                     src={navIcon.src}
                     alt={navIcon.alt}
+                    key={navIcon.alt}
                     width={28}
                     height={28}
                     className="object-contain" />

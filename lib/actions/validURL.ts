@@ -1,4 +1,4 @@
-const validURL = (url: string): boolean => {
+export async function validURL(url: string){
     try{
         const parsedURL = new URL(url);
         const hostName = parsedURL.hostname;
@@ -14,5 +14,3 @@ const validURL = (url: string): boolean => {
 
     return false;
 }
-
-export default validURL;
