@@ -29,7 +29,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
                 priceHistory: updatedPriceHistory,
                 lowestPrice: getLowestPrice(updatedPriceHistory),
                 highestPrice: getHighestPrice(updatedPriceHistory),
-                averagePrice: Number(getAveragePrice(updatedPriceHistory))
+                averagePrice: getAveragePrice(updatedPriceHistory)
             }
         }
 
@@ -42,6 +42,30 @@ export async function scrapeAndStoreProduct(productUrl: string) {
         revalidatePath(`/products/${newProduct._id}`); // we need to revalidate this path in order to show current changes
     }catch(error: any){
         throw new Error(`Failed to create/update product: ${error.message}`)
+    }
+}
+
+export async function getProductById(productId: string){
+    try{
+      const product = await Product.findOne({_id: productId});
+  
+      if(!product) return null;
+  
+      return product;
+    }catch(error: any){
+      console.log(error);
+    }
+}
+
+export async function getAllProducts(){
+    try{
+        connectToDB();
+
+        const products = await Product.find();
+        
+        return products;
+    }catch(error: any){
+        console.log(error);
     }
 }
 

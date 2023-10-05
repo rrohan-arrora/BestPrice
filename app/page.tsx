@@ -1,16 +1,19 @@
 import HeroCarousel from "@/components/HeroCarousel";
 import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
+import { getAllProducts } from "@/lib/actions";
+import ProductCard from "@/components/ProductCard";
 
-const Home = () => {
+const Home = async () => {
+  const allProducts = await getAllProducts();
   return (
     <>
       <section className="px-6 md:px-20 py-24">
         <div className="flex max-xl:flex-col gap-16">
-          <div className="flex flex-col justify-center"> 
+          <div className="flex flex-col justify-center">
             <p className="small-text">
               Money Saving Starts Here:
-              <Image 
+              <Image
                 src="/assets/icons/arrow-right.svg"
                 alt="arrow-right"
                 width={16}
@@ -34,12 +37,14 @@ const Home = () => {
         </div>
       </section>
 
-       <section className="trending-section">
+      <section className="trending-section">
         <h2 className="section-text">Trending</h2>
 
         <div className="flex flex-wrap gap-x-8 gap-y-16">
-          {["Apple Watch", "Apple Iphone 15", "Sneakers"].map((product) => (
-            <div>{product}</div>
+          {allProducts?.map((product: any) => (
+            <ProductCard
+              key={product._id}
+              product={product} />
           ))}
         </div>
       </section>

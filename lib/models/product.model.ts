@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
     ],
     lowestPrice: {type: Number},
     highestPrice: {type: Number},
-    averageNumber: {type: Number},
+    averagePrice: {type: Number},
     users: [
         {
             email: {type: String, required: true}

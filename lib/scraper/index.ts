@@ -70,16 +70,3 @@ export async function scrapAmazonProduct(url:string) {
     console.log(error);
   }
 }
-
-export async function getProductById(productId: string){
-  
-  try{
-    const product = await Product.findOne({_id: productId});
-
-    if(!product) return null;
-
-    return product;
-  }catch(error: any){
-    console.log(error);
-  }
-}
