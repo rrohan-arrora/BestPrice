@@ -1,3 +1,3 @@
 export type PriceHistoryItem = {
-    price: Number
+    price: number
 }

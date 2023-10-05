@@ -42,9 +42,9 @@ return lowestPrice.price;
 
 export function getAveragePrice(priceList: PriceHistoryItem[]) {
     const total = priceList.reduce((accumulator, currentValue) => {
-        return accumulator + +currentValue.price;
+        return accumulator + currentValue.price;
     }, 0);
-    
+
     const average = total / priceList.length;
 }
 

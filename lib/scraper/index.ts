@@ -44,9 +44,8 @@ export async function scrapAmazonProduct(url:string) {
     const currency = extractCurrency($(".a-price-symbol"));
     
     const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "");
-
-    const startRating = $('#acrPopover span.a-icon-alt').text().trim();
-
+    
+    const startRating = $('#acrPopover span.a-size-base.a-color-base').first().text().trim();
     // Construct data object with scraped information
     const data = {
       url,
@@ -58,6 +57,7 @@ export async function scrapAmazonProduct(url:string) {
       discountRate: Number(discountRate),
       stars: startRating,
       isOutOfStock: outOfStock,
+      priceHistory: [],
       lowestPrice: Number(currentPrice) || Number(originalPrice),
       highestPrice: Number(originalPrice) || Number(currentPrice),
       averagePrice: Number(currentPrice) || Number(originalPrice),
