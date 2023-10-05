@@ -46,5 +46,13 @@ export function getAveragePrice(priceList: PriceHistoryItem[]) {
     }, 0);
 
     const average = total / priceList.length;
+
+    return average;
+}
+
+export function formatNumber(price: number ) : number {
+    const formattedPrice = Number(price.toFixed(2).replace(/\.0*$/, ''));
+
+    return formattedPrice;
 }
 
