@@ -86,3 +86,7 @@ export async function otherTrendingProducts(productId: string){
     }
 }
 
+export async function addUserEmailToProduct(productId: string, email:string){
+    
+}
+
