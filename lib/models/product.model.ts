@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
     currentPrice: {type: Number, required: true},
     originalPrice: {type: Number, required: true},
     discountRate: {type: Number},
-    stars: {type: String},
+    stars: {type: Number},
     isOutOfStock: {type: Boolean, default: false},
     priceHistory:[
         {

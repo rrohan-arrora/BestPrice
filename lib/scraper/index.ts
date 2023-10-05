@@ -3,6 +3,7 @@
 import axios from "axios";
 import * as cheerio from 'cheerio';
 import { extractCurrency, extractPrice } from "../utils";
+import Product from "../models/product.model";
 
 export async function scrapAmazonProduct(url:string) {
     if(!url) return;
@@ -46,6 +47,7 @@ export async function scrapAmazonProduct(url:string) {
     const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "");
     
     const startRating = $('#acrPopover span.a-size-base.a-color-base').first().text().trim();
+    
     // Construct data object with scraped information
     const data = {
       url,
@@ -55,7 +57,7 @@ export async function scrapAmazonProduct(url:string) {
       currentPrice: Number(currentPrice) || Number(originalPrice),
       originalPrice: Number(originalPrice) || Number(currentPrice),
       discountRate: Number(discountRate),
-      stars: startRating,
+      stars: Number(startRating),
       isOutOfStock: outOfStock,
       priceHistory: [],
       lowestPrice: Number(currentPrice) || Number(originalPrice),
@@ -64,6 +66,19 @@ export async function scrapAmazonProduct(url:string) {
     }
 
     return data;
+  }catch(error: any){
+    console.log(error);
+  }
+}
+
+export async function getProductById(productId: string){
+  
+  try{
+    const product = await Product.findOne({_id: productId});
+
+    if(!product) return null;
+
+    return product;
   }catch(error: any){
     console.log(error);
   }
