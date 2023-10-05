@@ -1,4 +1,6 @@
-import { getProductById } from "@/lib/actions";
+import PriceInfoCard from "@/components/PriceInfoCard";
+import ProductCard from "@/components/ProductCard";
+import { getProductById, otherTrendingProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +14,7 @@ const ProductDetails = async ({params: {id}}: Props) => {
   const product = await getProductById(id);
 
   if(!product) redirect('/')
+  const otherProducts = await otherTrendingProducts(id);
 
   return (
     <div className="product-container">
@@ -72,26 +75,26 @@ const ProductDetails = async ({params: {id}}: Props) => {
 
           <div className="my-7 flex flex-col gap-5">
             <div className="flex gap-5 flex-wrap">
-              {/* <PriceInfoCard 
+              <PriceInfoCard
                 title="Current Price"
                 iconSrc="/assets/icons/price-tag.svg"
                 value={`${product.currency} ${formatNumber(product.currentPrice)}`}
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Average Price"
                 iconSrc="/assets/icons/chart.svg"
                 value={`${product.currency} ${formatNumber(product.averagePrice)}`}
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Highest Price"
                 iconSrc="/assets/icons/arrow-up.svg"
                 value={`${product.currency} ${formatNumber(product.highestPrice)}`}
               />
-              <PriceInfoCard 
+              <PriceInfoCard
                 title="Lowest Price"
                 iconSrc="/assets/icons/arrow-down.svg"
                 value={`${product.currency} ${formatNumber(product.lowestPrice)}`}
-              /> */}
+              />
             </div>
           </div>
 
@@ -114,6 +117,19 @@ const ProductDetails = async ({params: {id}}: Props) => {
           </Link>
         </button>
       </div>
+
+      {otherProducts && otherProducts?.length > 0 && (
+        <div className="py-14 flex flex-col gap-2 w-full">
+          <p className="section-text">Similar Products</p>
+
+          <div className="flex flex-wrap gap-10 mt-7 w-full">
+            {otherProducts.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

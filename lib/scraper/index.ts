@@ -31,9 +31,11 @@ export async function scrapAmazonProduct(url:string) {
     const title = $('#productTitle').text().trim();
     const currentPrice = extractPrice(
       $('.priceToPay span.a-price-whole'),
+      $('#tmmSwatches span#a-autoid-14 span.a-size-base')
     );
     const originalPrice = extractPrice(
-      $('.a-price.a-text-price span.a-offscreen')
+      $('.a-price.a-text-price span.a-offscreen'),
+      $('#tmmSwatches span#a-autoid-14 span.a-size-base')
     );
 
     const outOfStock = $('#availability span.a-declarative span.a-size-medium').text().trim().toLowerCase() === "currently unavailable.";

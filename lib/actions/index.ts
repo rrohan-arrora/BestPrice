@@ -69,3 +69,20 @@ export async function getAllProducts(){
     }
 }
 
+export async function otherTrendingProducts(productId: string){
+    try{
+        connectToDB();
+
+        const currentProduct = Product.findById(productId);
+        if(!currentProduct) return null;
+
+        const otherTrendingProducts = await Product.find({
+            _id: {$ne: productId}
+        }).limit(3);
+
+        return otherTrendingProducts;
+    }catch(error: any){
+        console.log(error);
+    }
+}
+

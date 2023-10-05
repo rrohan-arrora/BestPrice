@@ -51,7 +51,7 @@ export function getAveragePrice(priceList: PriceHistoryItem[]) {
 }
 
 export function formatNumber(price: number ) : number {
-    const formattedPrice = Number(price.toFixed(2).replace(/\.0*$/, ''));
+    const formattedPrice = Number(price?.toFixed(2).replace(/\.0*$/, ''));
 
     return formattedPrice;
 }
