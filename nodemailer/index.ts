@@ -23,12 +23,11 @@ export async function generateEmailBody(
 
   switch (type) {
     case Notification.WELCOME:
-      subject = `Welcome to Price Tracking for ${shortenedTitle}`;
+      subject = `Price Track for ${shortenedTitle}`;
       body = `
         <div>
           <h2>Welcome to Best Price 🚀</h2>
           <p>You are now tracking ${product.title}.</p>
-          <p>Here's an example of how you'll receive updates:</p>
           <div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f8f8;">
             <h3>${product.title} is back in stock!</h3>
             <p>We're excited to let you know that ${product.title} is now back in stock.</p>

@@ -1,3 +1,4 @@
+import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image"
 import Link from "next/link"
@@ -25,7 +26,7 @@ const ProductCard = ({product}: Props) => {
             <div className="flex justify-between">
                 <p className="text-black text-lg font-semibold">
                 <span>{product?.currency}</span>
-                <span>{product?.currentPrice}</span>
+                <span>{formatNumber(product?.currentPrice)}</span>
                 </p>
             </div>
         </div>
