@@ -1,4 +1,4 @@
-import { PriceHistoryItem } from "@/types";
+import { PriceHistoryItem, Product } from "@/types";
 
 export function extractPrice(...elements: any): string {
     for(const element of elements){
@@ -55,4 +55,21 @@ export function formatNumber(price: number ) : number {
 
     return formattedPrice;
 }
+
+export const getEmailNotifType = (
+    scrapedProduct: Product,
+    currentProduct: Product
+  ) => {
+    const lowestPrice = getLowestPrice(currentProduct.priceHistory);
+  
+    if (scrapedProduct.currentPrice < lowestPrice) {
+      return "LOWEST_PRICE";
+    }
+    if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
+      return "CHANGE_OF_STOCK";
+    }
+  
+    return null;
+  };
+  
 

@@ -1,7 +1,9 @@
 import Product from "@/lib/models/product.model";
 import connectToDB from "@/lib/mongoose";
 import { scrapAmazonProduct } from "@/lib/scraper";
-import { getAveragePrice, getHighestPrice, getLowestPrice } from "@/lib/utils";
+import { getAveragePrice, getEmailNotifType, getHighestPrice, getLowestPrice } from "@/lib/utils";
+import { generateEmailBody, sendEmail } from "@/nodemailer";
+import { NextResponse } from "next/server";
 
 export async function GET(){
     try{
@@ -41,9 +43,34 @@ export async function GET(){
                     uProduct
                 );
 
-            })
-        )
+                // ################### SEND THE EMAILS TO THE USERS WHO 
+                // SUBSCRIBED TO THE PRODUCT
 
+                const emailNotifyType = getEmailNotifType(
+                    scrapedProd,
+                    cProduct
+                );
+                
+                if (emailNotifyType && updatedProduct.users.length > 0) {
+                    const productInfo = {
+                      title: updatedProduct.title,
+                      url: updatedProduct.url,
+                    };
+                    // Construct emailContent
+                    const emailContent = await generateEmailBody(productInfo, emailNotifyType);
+                    // Get array of user emails
+                    const userEmails = updatedProduct.users.map((user: any) => user.email);
+                    // Send email notification
+                    await sendEmail(emailContent, userEmails);
+                  }
+                  return updatedProduct;
+            })
+        );
+
+        return NextResponse.json({
+            message: "OK",
+            data: updateProducts
+        });
     }catch(error){
         console.log(error);
     }
