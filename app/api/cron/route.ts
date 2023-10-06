@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 
 // export const maxDuration = 100; // This function can run for a maximum of 300 seconds
 export const runtime = 'edge';
+export const preferredRegion = 'bom1';
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
